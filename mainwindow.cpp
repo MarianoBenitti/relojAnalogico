@@ -28,7 +28,7 @@ void MainWindow::TimerGen1(){
     QPainter QpainterReloj(QpaintReloj->getCanvas());
     QPen pen;
     QBrush brush;
-    QPoint trapecio[4];
+    QPoint trapecio[4];//trapecio horas
     trapecio[0].setX(-50);
     trapecio[0].setY(-225);
     trapecio[1].setX(50);
@@ -38,14 +38,14 @@ void MainWindow::TimerGen1(){
     trapecio[3].setX(-30);
     trapecio[3].setY(-180);
 
-
-    QPoint centro;
+    QPoint centro;//centro de las horas
     centro.setX(0);
     centro.setY(-200);
+
     int i;
     //se dibuja el circulo central del reloj
     pen.setColor(CELESTEBASE);
-    pen.setWidth(7);
+    pen.setWidth(4);
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::darkGray);
     brush.setColor(GRISBASE);
@@ -53,17 +53,18 @@ void MainWindow::TimerGen1(){
     QpainterReloj.setBrush(brush);
     QpainterReloj.drawEllipse(10,10,480,480);
     //dibujamos los circulos donde se encontraran las horas
-    QpainterReloj.translate(250,250);
-    brush.setColor(Qt::darkMagenta);
-    brush.setStyle(Qt::Dense3Pattern);
+    QpainterReloj.translate(250,250);//trasladamos el origen de coordenadas al centro
+    brush.setColor(Qt::lightGray);//seleccionamos el color de relleno de los trapecios
     for(i=1;i<=12;i++){
         QpainterReloj.rotate(30);
         if(i%3){
             QpainterReloj.setBrush(Qt::NoBrush);
             QpainterReloj.drawEllipse(centro,28,28);
+            QpainterReloj.drawText(-7,-195,QString::number(i,10));
         }else{
             QpainterReloj.setBrush(brush);
             QpainterReloj.drawPolygon(trapecio,4);
+            QpainterReloj.drawText(-7,-195,QString::number(i,10));
         }
     }
 
