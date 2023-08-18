@@ -9,10 +9,11 @@
 
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent,Qt::FramelessWindowHint)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_TranslucentBackground);
     QpaintReloj = new QPaintBox(0,0,ui->widget);//instancio la pantalla de dibujo con el tamaño original del widget
     TimerGen = new QTimer(this);
 
@@ -50,23 +51,23 @@ void MainWindow::TimerGen1(){
     centro.setX(0);
     centro.setY(-200);
     QPoint agujaS[9];//aguja segundero
-    agujaS[0].setX(-10);
+    agujaS[0].setX(-5);
     agujaS[0].setY(50);
-    agujaS[1].setX(-10);
+    agujaS[1].setX(-5);
     agujaS[1].setY(-105);
-    agujaS[2].setX(-5);
+    agujaS[2].setX(-2);
     agujaS[2].setY(-110);
-    agujaS[3].setX(-5);
+    agujaS[3].setX(-2);
     agujaS[3].setY(-160);
     agujaS[4].setX(0);
     agujaS[4].setY(-170);
-    agujaS[5].setX(5);
+    agujaS[5].setX(2);
     agujaS[5].setY(-160);
-    agujaS[6].setX(5);
+    agujaS[6].setX(2);
     agujaS[6].setY(-110);
-    agujaS[7].setX(10);
+    agujaS[7].setX(5);
     agujaS[7].setY(-105);
-    agujaS[8].setX(10);
+    agujaS[8].setX(5);
     agujaS[8].setY(50);
     QPoint agujaM[9];//aguja minutero
     agujaM[0].setX(-10);
@@ -189,7 +190,7 @@ void MainWindow::TimerGen1(){
     //armamos el minutero
 
     if(tiempo.msec()>=900 && tiempo.second()==59){
-        TimerGen->start(5);
+        TimerGen->start(10);
         angulo=tiempo.minute()*6+(tiempo.msec()-900)/20*1.2;
     }else{
         angulo=tiempo.minute()*6;
