@@ -50,6 +50,10 @@ void QPaintBox::mouseReleaseEvent(QMouseEvent *event){
 void QPaintBox::mouseMoveEvent(QMouseEvent *event){
     emit(OnMouseMove(event));
 }
+
+void QPaintBox::mouseDoubleClickEvent(QMouseEvent *event){
+    emit(OnDoubleClick(event));
+}
 //------------------------------------------------------------------------------
 QPixmap *QPaintBox::getCanvas(){
     return pixelCanvas;

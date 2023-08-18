@@ -13,12 +13,16 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setAttribute(Qt::WA_TranslucentBackground);//ponemos transparente todo alrrededor del widget
+
     QpaintReloj = new QPaintBox(0,0,ui->widget);//instancio la pantalla de dibujo con el tamaño original del widget
     TimerGen = new QTimer(this);
 
     connect(TimerGen, &QTimer::timeout,this,&MainWindow::TimerGen1);
     TimerGen->start(50);
+    connect(QpaintReloj,&QPaintBox::OnDoubleClick,this,&MainWindow::qPaintBoxMouseDoubleClick);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -215,3 +219,8 @@ void MainWindow::TimerGen1(){
 
     QpaintReloj->update();   
 }
+
+void MainWindow::qPaintBoxMouseDoubleClick(QMouseEvent *event){
+    close();
+}
+

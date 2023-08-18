@@ -38,6 +38,14 @@ signals:
      */
     void OnMouseMove(QMouseEvent *event);
 
+    /**
+     * @brief OnDoubleClick
+     * Detecta el doble click sobre el widget
+     * @param event[in]:recibe el evento del doble click
+     *
+    */
+    void OnDoubleClick(QMouseEvent * event);
+
 public slots:
 
 protected:
@@ -46,7 +54,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
     QPixmap *pixelCanvas;
