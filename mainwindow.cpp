@@ -49,8 +49,65 @@ void MainWindow::TimerGen1(){
     QPoint centro;//centro de las horas
     centro.setX(0);
     centro.setY(-200);
-
+    QPoint agujaS[9];//aguja segundero
+    agujaS[0].setX(-10);
+    agujaS[0].setY(50);
+    agujaS[1].setX(-10);
+    agujaS[1].setY(-105);
+    agujaS[2].setX(-5);
+    agujaS[2].setY(-110);
+    agujaS[3].setX(-5);
+    agujaS[3].setY(-160);
+    agujaS[4].setX(0);
+    agujaS[4].setY(-170);
+    agujaS[5].setX(5);
+    agujaS[5].setY(-160);
+    agujaS[6].setX(5);
+    agujaS[6].setY(-110);
+    agujaS[7].setX(10);
+    agujaS[7].setY(-105);
+    agujaS[8].setX(10);
+    agujaS[8].setY(50);
+    QPoint agujaM[9];//aguja minutero
+    agujaM[0].setX(-10);
+    agujaM[0].setY(30);
+    agujaM[1].setX(-10);
+    agujaM[1].setY(-75);
+    agujaM[2].setX(-5);
+    agujaM[2].setY(-80);
+    agujaM[3].setX(-5);
+    agujaM[3].setY(-110);
+    agujaM[4].setX(0);
+    agujaM[4].setY(-120);
+    agujaM[5].setX(5);
+    agujaM[5].setY(-110);
+    agujaM[6].setX(5);
+    agujaM[6].setY(-80);
+    agujaM[7].setX(10);
+    agujaM[7].setY(-75);
+    agujaM[8].setX(10);
+    agujaM[8].setY(30);
+    QPoint agujaH[9];//aguja horero
+    agujaH[0].setX(-10);
+    agujaH[0].setY(20);
+    agujaH[1].setX(-10);
+    agujaH[1].setY(-45);
+    agujaH[2].setX(-5);
+    agujaH[2].setY(-50);
+    agujaH[3].setX(-5);
+    agujaH[3].setY(-70);
+    agujaH[4].setX(0);
+    agujaH[4].setY(-80);
+    agujaH[5].setX(5);
+    agujaH[5].setY(-70);
+    agujaH[6].setX(5);
+    agujaH[6].setY(-50);
+    agujaH[7].setX(10);
+    agujaH[7].setY(-45);
+    agujaH[8].setX(10);
+    agujaH[8].setY(20);
     int i;
+
 
     //se dibuja el circulo central del reloj
         //se prepara la pen
@@ -63,6 +120,7 @@ void MainWindow::TimerGen1(){
     QpainterReloj.setPen(pen);
     QpainterReloj.setBrush(brush);
     QpainterReloj.drawEllipse(10,10,480,480);
+
     //dibujamos los circulos donde se encontraran las horas
 
     QpainterReloj.translate(250,250);//trasladamos el origen de coordenadas al centro
@@ -74,18 +132,18 @@ void MainWindow::TimerGen1(){
         pen.setColor(QColor(0, 158, 255 ));//cambiamos el color para los trapecios y circulos pequeños
         QpainterReloj.setPen(pen);
         if(i%3){
-            brush.setColor(QColor(0, 158, 150 ));//cambiamos el color de relleno de los circulos
+            brush.setColor(Qt::white);//cambiamos el color de relleno de los circulos
             QpainterReloj.setBrush(brush);
             QpainterReloj.drawEllipse(centro,28,28);
-            pen.setColor(QColor(0,0,101));//cambiamos el color para los numeros
+            pen.setColor(Qt::black);//cambiamos el color para los numeros
             QpainterReloj.setPen(pen);
-            QpainterReloj.drawText(-14,-220,28,28,Qt::AlignCenter,QString::number(i,10),nullptr);
+            QpainterReloj.drawText(-14,-215,28,28,Qt::AlignCenter,QString::number(i,10),nullptr);
 
         }else{
-            brush.setColor(QColor(225, 206, 226));//cambiamos el color de relleno de los trapecios
+            brush.setColor(Qt::black);//cambiamos el color de relleno de los trapecios
             QpainterReloj.setBrush(brush);
             QpainterReloj.drawPolygon(trapecio,4);
-            pen.setColor(QColor(0,0,101));//cambiamos el color para los numeros
+            pen.setColor(QColor(225, 206, 226));//cambiamos el color para los numeros
             QpainterReloj.setPen(pen);
             QpainterReloj.drawText(-14,-220,28,28,Qt::AlignCenter,QString::number(i,10),nullptr);
         }
@@ -109,6 +167,12 @@ void MainWindow::TimerGen1(){
 
 
     QpainterReloj.restore();
+    //cambiamos los colores para las agujas antes de guardar
+    brush.setColor(QColor(0,0,101));
+    pen.setColor(QColor(0, 158, 150));
+    pen.setWidth(2);
+    QpainterReloj.setBrush(brush);
+    QpainterReloj.setPen(pen);
     QpainterReloj.save();
     //armamos el horero
     if(tiempo.hour()<=12){
@@ -117,9 +181,9 @@ void MainWindow::TimerGen1(){
         angulo=(tiempo.hour()-12)*30+tiempo.minute()/20*10;
     }
     QpainterReloj.rotate(angulo);
-    //dibujamos la aguja de las horas
-    QpainterReloj.drawLine(0,0,0,-50);
 
+    //dibujamos la aguja de las horas
+    QpainterReloj.drawPolygon(agujaH,9);
     QpainterReloj.restore();
     QpainterReloj.save();
     //armamos el minutero
@@ -133,7 +197,7 @@ void MainWindow::TimerGen1(){
     }
     QpainterReloj.rotate(angulo);
     //dibujamos la aguja de los minutos
-    QpainterReloj.drawLine(0,0,0,-75);
+    QpainterReloj.drawPolygon(agujaM,9);
 
     QpainterReloj.restore();
     QpainterReloj.save();
@@ -143,9 +207,9 @@ void MainWindow::TimerGen1(){
     angulo=(tiempo.second()*6+tiempo.msec()/100*0.6);
     QpainterReloj.rotate(angulo);
     //dibujamos la aguja de los segundos
-    QpainterReloj.drawLine(0,0,0,-100);
 
-
+    QpainterReloj.drawPolygon(agujaS,9);
+    QpainterReloj.drawEllipse(QPoint(0,0),20,20);
 
 
     QpaintReloj->update();   
